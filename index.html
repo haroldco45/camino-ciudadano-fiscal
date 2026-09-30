@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Camino ciudadano · Fiscal General</title>
+<meta name="description" content="Guía y generador de documentos para que cualquier ciudadano use los mecanismos legales frente al cargo de Fiscal General de la Nación.">
+<meta name="theme-color" content="#1F3F9E">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Camino ciudadano">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Camino ciudadano · Fiscal General">
+<meta property="og:description" content="Qué puede hacer un ciudadano frente a la Fiscal General: los caminos legales y los documentos listos para radicar.">
+<meta property="og:image" content="icons/icon-512.png">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F5F6F9; --paper:#FFFFFF; --ink:#141D3A; --muted:#566079; --line:#D7DBE5;
+  --blue:#1F3F9E; --blue-soft:#E6ECFA; --mark:#F4C430; --warn:#8A2B1E; --warn-soft:#FBEAE6; --ok:#1C6B45;
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --body:"Source Sans 3","Segoe UI",Roboto,Arial,sans-serif;
+  --letter:"Source Serif 4",Georgia,"Times New Roman",serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1426; --paper:#171E36; --ink:#E8ECF7; --muted:#A3ACC4; --line:#2C3656;
+    --blue:#8FA9F2; --blue-soft:#1F2A4D; --mark:#E8B923; --warn:#F2A18F; --warn-soft:#3A1F1C; --ok:#7FD1A6;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1426; --paper:#171E36; --ink:#E8ECF7; --muted:#A3ACC4; --line:#2C3656;
+  --blue:#8FA9F2; --blue-soft:#1F2A4D; --mark:#E8B923; --warn:#F2A18F; --warn-soft:#3A1F1C; --ok:#7FD1A6;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px);scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 var(--body);-webkit-font-smoothing:antialiased}
+img{max-width:100%}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--mark);outline-offset:2px}
+
+/* barra de navegación */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
+.nav-in{max-width:960px;margin:0 auto;display:flex;gap:4px;overflow-x:auto;padding:8px 16px;scrollbar-width:none}
+.nav-in::-webkit-scrollbar{display:none}
+.nav a{flex:0 0 auto;text-decoration:none;color:var(--muted);font:600 15px/1 var(--body);padding:10px 12px;border-radius:6px;white-space:nowrap}
+.nav a:hover{background:var(--blue-soft);color:var(--ink)}
+
+.wrap{max-width:960px;margin:0 auto;padding:0 20px}
+
+/* portada */
+.hero{padding:56px 0 40px;border-bottom:1px solid var(--line)}
+.hero h1{font:800 clamp(44px,9vw,92px)/.92 var(--display);letter-spacing:-.01em;margin:0 0 20px;max-width:12ch}
+.hero h1 .strike{position:relative;color:var(--muted)}
+.hero h1 .strike::after{content:"";position:absolute;left:-2%;right:-2%;top:52%;height:.12em;background:var(--warn);transform:rotate(-2deg)}
+.hero p.lead{font-size:20px;max-width:56ch;margin:0 0 28px;color:var(--ink)}
+.ways{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0;border-top:3px solid var(--ink)}
+.ways a{display:block;text-decoration:none;color:var(--ink);padding:16px 16px 18px 0;border-bottom:1px solid var(--line)}
+.ways a:hover .w-t{text-decoration:underline;text-decoration-color:var(--mark);text-decoration-thickness:4px;text-underline-offset:3px}
+.w-n{font:700 34px/1 var(--display);color:var(--blue)}
+.w-t{font:700 19px/1.25 var(--body);margin:6px 0 4px}
+.w-d{font-size:15px;color:var(--muted)}
+
+section.block{padding:48px 0;border-bottom:1px solid var(--line)}
+.step-no{font:700 18px/1 var(--display);color:var(--blue);margin:0 0 6px}
+h2{font:800 clamp(32px,5.5vw,48px)/1 var(--display);margin:0 0 16px;max-width:22ch}
+h3{font:700 20px/1.3 var(--body);margin:28px 0 8px}
+p{max-width:68ch}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin:24px 0}
+.fact{border-left:4px solid var(--blue);padding:4px 0 4px 14px}
+.fact b{display:block;font-size:17px;margin-bottom:2px}
+.fact span{color:var(--muted);font-size:15.5px}
+.fact.no{border-color:var(--warn)}
+
+.notice{background:var(--warn-soft);border:1px solid var(--warn);color:var(--ink);border-radius:8px;padding:14px 16px;margin:20px 0;max-width:72ch}
+.notice strong{color:var(--warn)}
+.info{background:var(--blue-soft);border-radius:8px;padding:14px 16px;margin:20px 0;max-width:72ch}
+
+.contact{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:18px 0}
+.contact div{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:12px 14px;font-size:15.5px}
+.contact b{display:block;font-size:13.5px;color:var(--muted);font-weight:600;margin-bottom:2px}
+
+/* formulario y carta */
+.gen{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:28px;margin-top:24px;align-items:start}
+@media (max-width:820px){.gen{grid-template-columns:1fr}}
+form{display:grid;gap:14px}
+label{display:grid;gap:5px;font-weight:600;font-size:15px}
+label small{font-weight:400;color:var(--muted)}
+input,select,textarea{font:16px/1.4 var(--body);color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:10px 12px;width:100%}
+textarea{min-height:120px;resize:vertical}
+input:focus,select:focus,textarea:focus{border-color:var(--blue);outline:2px solid var(--blue-soft)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:480px){.row2{grid-template-columns:1fr}}
+.letter{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:28px 26px;font:15.5px/1.7 var(--letter);white-space:pre-wrap;max-height:620px;overflow:auto;box-shadow:0 1px 0 var(--line),0 12px 0 -6px var(--paper),0 12px 0 -5px var(--line)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.btn{appearance:none;border:0;border-radius:6px;padding:11px 16px;font:700 15.5px/1 var(--body);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.btn.primary{background:var(--blue);color:var(--paper)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn:hover{filter:brightness(1.08)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(120px);background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:8px;font-weight:600;transition:transform .25s;z-index:9}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+ol.steps{padding-left:22px;max-width:68ch}
+ol.steps li{margin-bottom:10px}
+
+/* seguimiento */
+.track{list-style:none;padding:0;margin:20px 0;border-top:1px solid var(--line)}
+.track li{display:grid;grid-template-columns:28px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid var(--line);align-items:start}
+.track input[type=checkbox]{width:22px;height:22px;margin-top:2px;accent-color:var(--blue)}
+.track .t{font-weight:600}
+.track .meta{font-size:14px;color:var(--muted)}
+.track .rad{margin-top:8px;max-width:320px}
+.track li.done .t{text-decoration:line-through;text-decoration-color:var(--ok);text-decoration-thickness:2px}
+.progress{height:10px;background:var(--line);border-radius:5px;overflow:hidden;max-width:420px}
+.progress i{display:block;height:100%;background:var(--ok);width:0;transition:width .3s}
+
+footer{padding:36px 0 56px;color:var(--muted);font-size:14.5px}
+footer p{max-width:72ch}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Secciones">
+  <div class="nav-in">
+    <a href="#saber">Lo básico</a>
+    <a href="#queja">1. Queja</a>
+    <a href="#peticion">2. Petición</a>
+    <a href="#veeduria">3. Veeduría</a>
+    <a href="#congreso">4. Congreso</a>
+    <a href="#seguimiento">Mi seguimiento</a>
+    <a href="#compartir">Compartir</a>
+    <button type="button" id="installBtn" class="btn primary" hidden style="margin-left:auto;padding:9px 14px;font-size:14.5px">Instalar app</button>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <h1><span class="strike">Revocatoria</span> Caminos legales</h1>
+    <p class="lead">A la Fiscal General de la Nación no la elige el pueblo, así que no se le puede revocar el mandato. Pero cualquier ciudadano sí puede usar estos cuatro caminos. Aquí te explicamos cada uno y te armamos los documentos.</p>
+    <div class="ways">
+      <a href="#queja"><div class="w-n">1</div><div class="w-t">Queja o denuncia formal</div><div class="w-d">Ante la Comisión de Acusaciones de la Cámara. El único camino que puede llevar a sacarla del cargo.</div></a>
+      <a href="#peticion"><div class="w-n">2</div><div class="w-t">Derecho de petición</div><div class="w-d">Pedirle cuentas a la Fiscalía con respuesta obligatoria.</div></a>
+      <a href="#veeduria"><div class="w-n">3</div><div class="w-t">Veeduría ciudadana</div><div class="w-d">Organizarse para vigilar la gestión de forma permanente.</div></a>
+      <a href="#congreso"><div class="w-n">4</div><div class="w-t">Presión en el Congreso</div><div class="w-d">Pedir a los representantes un debate público.</div></a>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="block" id="saber">
+  <div class="wrap">
+    <h2>Lo que hay que saber antes de empezar</h2>
+    <div class="facts">
+      <div class="fact"><b>Cómo llegó al cargo</b><span>La eligió la Sala Plena de la Corte Suprema en marzo de 2024, de una terna del presidente, para un periodo de cuatro años (hasta 2028).</span></div>
+      <div class="fact"><b>Quién la puede investigar</b><span>Tiene fuero: solo la investiga la Comisión de Investigación y Acusación de la Cámara, y la juzga el Senado (arts. 174, 175 y 178 de la Constitución; Ley 5 de 1992).</span></div>
+      <div class="fact no"><b>Lo que no existe</b><span>No hay revocatoria del mandato para este cargo; esa figura es solo para alcaldes y gobernadores.</span></div>
+      <div class="fact no"><b>Lo que ya venció</b><span>La demanda de nulidad electoral ante el Consejo de Estado tenía 30 días después de la elección. Ese plazo ya pasó.</span></div>
+    </div>
+    <div class="notice"><strong>Importante:</strong> una queja necesita hechos concretos y verificables, no opiniones ni "mala imagen". Acusar a alguien de un delito sabiendo que es falso puede ser falsa denuncia, injuria o calumnia (Código Penal). Si tienes dudas sobre tus pruebas, consulta un abogado antes de radicar.</div>
+  </div>
+</section>
+
+<section class="block" id="queja">
+  <div class="wrap">
+    <p class="step-no">Camino 1</p>
+    <h2>Queja o denuncia ante la Comisión de Acusaciones</h2>
+    <p>Puede ser <b>disciplinaria</b> (por faltas en el ejercicio del cargo) o <b>penal</b> (por un posible delito). Llena el formulario y la carta se arma sola a la derecha.</p>
+    <div class="contact">
+      <div><b>Correo de la Comisión</b>comision.acusaciones@camara.gov.co</div>
+      <div><b>Dirección</b>Carrera 7 N.º 8-68, Edificio Nuevo del Congreso, piso 5, Bogotá</div>
+      <div><b>Radicación de correspondencia</b>Lunes a viernes, 8:30 a.m. a 4:30 p.m. (primer piso)</div>
+    </div>
+    <div class="info">Después de radicar, la Ley 5 de 1992 exige que el denunciante <b>ratifique la queja bajo juramento</b>. Guarda el número de radicado y pendiente de que te citen; si no la ratificas, puede archivarse.</div>
+
+    <div class="gen">
+      <form id="fQueja" autocomplete="on">
+        <div class="row2">
+          <label>Nombre completo<input name="nombre" required></label>
+          <label>Cédula<input name="cedula" inputmode="numeric"></label>
+        </div>
+        <div class="row2">
+          <label>Ciudad<input name="ciudad" value="Caucasia, Antioquia"></label>
+          <label>Teléfono<input name="tel" inputmode="tel"></label>
+        </div>
+        <div class="row2">
+          <label>Correo para notificaciones<input name="correo" type="email"></label>
+          <label>Dirección<input name="dir"></label>
+        </div>
+        <label>Tipo de queja
+          <select name="tipo">
+            <option value="disciplinaria">Queja disciplinaria</option>
+            <option value="penal">Denuncia penal</option>
+            <option value="ambas">Denuncia penal y queja disciplinaria</option>
+          </select>
+        </label>
+        <label>Hechos <small>Uno por línea. Qué pasó, cuándo y dónde. Solo hechos que puedas sustentar.</small>
+          <textarea name="hechos" placeholder="El día ___ de ___ de 20__, la Fiscalía ..."></textarea>
+        </label>
+        <label>Pruebas que anexas <small>Una por línea: documentos, enlaces a fuentes oficiales, respuestas a derechos de petición, testigos.</small>
+          <textarea name="pruebas" placeholder="Copia de la respuesta al derecho de petición radicado N.º ..."></textarea>
+        </label>
+        <label>Qué le pides a la Comisión <small>Opcional</small>
+          <textarea name="pide" style="min-height:80px" placeholder="Que se abra investigación y, si hay mérito, se formule acusación ante el Senado."></textarea>
+        </label>
+      </form>
+      <div>
+        <div class="letter" id="lQueja" aria-live="polite"></div>
+        <div class="actions">
+          <button class="btn primary" type="button" data-copy="lQueja">Copiar carta</button>
+          <a class="btn ghost" id="mailQueja" target="_blank" rel="noopener">Abrir en el correo</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="peticion">
+  <div class="wrap">
+    <p class="step-no">Camino 2</p>
+    <h2>Derecho de petición a la Fiscalía</h2>
+    <p>Es la forma de conseguir información oficial que luego sirve como prueba. La entidad está obligada a responder (art. 23 de la Constitución y Ley 1755 de 2015): 15 días hábiles en general, 10 días hábiles si pides documentos o información.</p>
+    <p>Se radica por el canal de PQRSD en la página oficial de la Fiscalía (fiscalia.gov.co). Guarda el número de radicado.</p>
+
+    <div class="gen">
+      <form id="fPet">
+        <div class="row2">
+          <label>Nombre completo<input name="nombre"></label>
+          <label>Cédula<input name="cedula" inputmode="numeric"></label>
+        </div>
+        <div class="row2">
+          <label>Ciudad<input name="ciudad" value="Caucasia, Antioquia"></label>
+          <label>Correo para la respuesta<input name="correo" type="email"></label>
+        </div>
+        <fieldset style="border:1px solid var(--line);border-radius:8px;padding:12px 14px">
+          <legend style="font-weight:600;font-size:15px;padding:0 6px">Qué información pides</legend>
+          <label style="font-weight:400;display:flex;gap:8px;align-items:flex-start"><input type="checkbox" name="q" value="Número de noticias criminales recibidas, archivadas, con imputación y con condena en los años 2024, 2025 y 2026, discriminado por departamento, con especial detalle de Antioquia." checked style="width:auto;margin-top:4px">Resultados de las investigaciones por año</label>
+          <label style="font-weight:400;display:flex;gap:8px;align-items:flex-start"><input type="checkbox" name="q" value="Ejecución presupuestal de la Fiscalía General de la Nación para las vigencias 2024, 2025 y lo corrido de 2026, y el valor total de contratos de prestación de servicios suscritos en esos periodos." checked style="width:auto;margin-top:4px">Ejecución del presupuesto y contratos</label>
+          <label style="font-weight:400;display:flex;gap:8px;align-items:flex-start"><input type="checkbox" name="q" value="La política de priorización de casos vigente y los indicadores de gestión adoptados para medir su cumplimiento, con los resultados obtenidos a la fecha." checked style="width:auto;margin-top:4px">Priorización e indicadores de gestión</label>
+          <label style="font-weight:400;display:flex;gap:8px;align-items:flex-start"><input type="checkbox" name="q" value="Número de fiscales, investigadores y casos activos por fiscal en las seccionales que cubren la subregión del Bajo Cauca antioqueño." style="width:auto;margin-top:4px">Capacidad en el Bajo Cauca</label>
+        </fieldset>
+        <label>Otra pregunta <small>Opcional</small><textarea name="otra" style="min-height:80px"></textarea></label>
+      </form>
+      <div>
+        <div class="letter" id="lPet" aria-live="polite"></div>
+        <div class="actions">
+          <button class="btn primary" type="button" data-copy="lPet">Copiar petición</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="veeduria">
+  <div class="wrap">
+    <p class="step-no">Camino 3</p>
+    <h2>Crear una veeduría ciudadana</h2>
+    <p>Un grupo de ciudadanos organizados tiene más peso que una persona sola. La Ley 850 de 2003 permite vigilar la gestión de cualquier entidad pública, incluida la Fiscalía.</p>
+    <ol class="steps">
+      <li>Reúnan a las personas interesadas y hagan un acta de constitución: nombre de la veeduría, objeto (vigilar la gestión de la Fiscalía General de la Nación), duración, integrantes y su identificación.</li>
+      <li>Inscríbanla ante la Personería Municipal o la Cámara de Comercio. En Caucasia, en la Personería.</li>
+      <li>Usen el derecho de petición (camino 2) como herramienta principal: la veeduría puede pedir información y la entidad debe responder.</li>
+      <li>Organicen lo que encuentren en informes con fechas y fuentes. Esos informes son la base de una queja sólida (camino 1).</li>
+      <li>Si encuentran irregularidades, además de la Comisión de Acusaciones pueden informar a la Contraloría (manejo de recursos) y a la opinión pública.</li>
+    </ol>
+  </div>
+</section>
+
+<section class="block" id="congreso">
+  <div class="wrap">
+    <p class="step-no">Camino 4</p>
+    <h2>Pedir un debate a los congresistas</h2>
+    <p>Las comisiones del Congreso pueden invitar o citar a la Fiscal para que rinda cuentas en público (art. 137 de la Constitución). Esto no la saca del cargo, pero pone el tema en la agenda. Escríbele a los representantes de tu departamento.</p>
+    <div class="gen">
+      <form id="fCong">
+        <label>Tu nombre<input name="nombre"></label>
+        <label>Tu ciudad<input name="ciudad" value="Caucasia, Antioquia"></label>
+        <label>Por qué pides el debate <small>Con hechos, en pocas líneas</small>
+          <textarea name="motivo" placeholder="Los resultados de la Fiscalía en el Bajo Cauca ..."></textarea>
+        </label>
+      </form>
+      <div>
+        <div class="letter" id="lCong" aria-live="polite"></div>
+        <div class="actions">
+          <button class="btn primary" type="button" data-copy="lCong">Copiar mensaje</button>
+          <a class="btn ghost" id="waCong" target="_blank" rel="noopener">Enviar por WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="seguimiento">
+  <div class="wrap">
+    <h2>Mi seguimiento</h2>
+    <p>Marca lo que ya hiciste y anota los números de radicado. Queda guardado en este teléfono o computador.</p>
+    <div class="progress" aria-hidden="true"><i id="bar"></i></div>
+    <p id="progTxt" style="font-weight:600;margin-top:8px"></p>
+    <ul class="track" id="track"></ul>
+    <button class="btn ghost" type="button" id="reset">Borrar mi seguimiento</button>
+  </div>
+</section>
+
+<section class="block" id="compartir">
+  <div class="wrap">
+    <h2>Pásalo a quien le interese</h2>
+    <p>Mientras más ciudadanos usen estos caminos con hechos bien documentados, más peso tienen.</p>
+    <div class="actions">
+      <a class="btn primary" id="waShare" target="_blank" rel="noopener">Compartir por WhatsApp</a>
+      <button class="btn ghost" type="button" id="copyLink">Copiar enlace</button>
+    </div>
+    <p id="iosHelp" hidden style="margin-top:16px;color:var(--muted)">En iPhone: abre esta página en Safari, toca el botón de compartir y elige "Agregar a pantalla de inicio".</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Guía informativa sobre mecanismos de participación ciudadana. No es asesoría jurídica ni representa a ninguna entidad. Verifica datos de contacto en las páginas oficiales de la Cámara de Representantes y la Fiscalía antes de radicar.</p>
+    <p>Hecho por Vibras Positivas HM · Caucasia, Antioquia · <span id="fecha"></span></p>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+  const TZ = 'America/Bogota';
+  const STORE = 'camino-fiscal-v1';
+  const $ = s => document.querySelector(s);
+
+  function hoyLargo(){
+    return new Intl.DateTimeFormat('es-CO',{timeZone:TZ,day:'numeric',month:'long',year:'numeric'}).format(new Date());
+  }
+  function ahoraCorto(){
+    return new Intl.DateTimeFormat('es-CO',{timeZone:TZ,day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}).format(new Date());
+  }
+  $('#fecha').textContent = hoyLargo() + ' (hora de Colombia)';
+
+  function load(){ try{ return JSON.parse(localStorage.getItem(STORE)) || {}; }catch(e){ return {}; } }
+  function save(d){ try{ localStorage.setItem(STORE, JSON.stringify(d)); }catch(e){} }
+  let state = load();
+  state.forms = state.forms || {};
+  state.track = state.track || {};
+
+  function toast(msg){
+    const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+    clearTimeout(toast._t); toast._t = setTimeout(()=>t.classList.remove('show'), 2200);
+  }
+  const val = (v, ph) => (v && v.trim()) ? v.trim() : ph;
+  const lines = (txt) => (txt||'').split('\n').map(s=>s.trim()).filter(Boolean);
+
+  function formData(form){
+    const d = {};
+    for (const el of form.elements){
+      if (!el.name) continue;
+      if (el.type === 'checkbox'){ (d[el.name] = d[el.name] || []); if (el.checked) d[el.name].push(el.value); }
+      else d[el.name] = el.value;
+    }
+    return d;
+  }
+  function restore(form, id){
+    const saved = state.forms[id]; if (!saved) return;
+    for (const el of form.elements){
+      if (!el.name || !(el.name in saved)) continue;
+      if (el.type === 'checkbox') el.checked = saved[el.name].includes(el.value);
+      else el.value = saved[el.name];
+    }
+  }
+
+  /* Camino 1: queja */
+  function buildQueja(d){
+    const tipoTxt = {
+      disciplinaria:'QUEJA DISCIPLINARIA',
+      penal:'DENUNCIA PENAL',
+      ambas:'DENUNCIA PENAL Y QUEJA DISCIPLINARIA'
+    }[d.tipo];
+    const h = lines(d.hechos), p = lines(d.pruebas);
+    const hechos = h.length ? h.map((x,i)=>`${i+1}. ${x}`).join('\n') : '1. [Describe aquí los hechos concretos: qué, cuándo, dónde]';
+    const pruebas = p.length ? p.map((x,i)=>`${i+1}. ${x}`).join('\n') : '1. [Relaciona aquí los documentos o pruebas que anexas]';
+    return `${val(d.ciudad,'[Ciudad]')}, ${hoyLargo()}
+
+Señores
+COMISIÓN DE INVESTIGACIÓN Y ACUSACIÓN
+Cámara de Representantes
+Carrera 7 N.º 8-68, Edificio Nuevo del Congreso
+Bogotá D.C.
+
+Referencia: ${tipoTxt} contra la Fiscal General de la Nación, doctora Luz Adriana Camargo Garzón.
+
+Yo, ${val(d.nombre,'[Nombre completo]')}, identificado(a) con cédula de ciudadanía N.º ${val(d.cedula,'[número]')}, en ejercicio de los derechos que me otorgan los artículos 23, 40 y 178 de la Constitución Política y los artículos 329 y siguientes de la Ley 5 de 1992, presento ante esta Comisión la siguiente ${tipoTxt.toLowerCase()}, con fundamento en los siguientes
+
+HECHOS
+${hechos}
+
+PRUEBAS
+${pruebas}
+
+SOLICITUD
+${val(d.pide,'Que se abra la investigación correspondiente y, si hay mérito, se formule acusación ante el Senado de la República.')}
+
+JURAMENTO
+Manifiesto bajo la gravedad del juramento que los hechos aquí narrados son ciertos según mi conocimiento, y que no he presentado otra denuncia o queja por los mismos hechos. Estoy dispuesto(a) a ratificar esta queja cuando la Comisión lo requiera.
+
+NOTIFICACIONES
+Dirección: ${val(d.dir,'[Dirección]')}
+Teléfono: ${val(d.tel,'[Teléfono]')}
+Correo electrónico: ${val(d.correo,'[Correo]')}
+
+Atentamente,
+
+
+_____________________________
+${val(d.nombre,'[Nombre completo]')}
+C.C. ${val(d.cedula,'[número]')}`;
+  }
+
+  /* Camino 2: petición */
+  function buildPet(d){
+    const qs = (d.q||[]).slice();
+    if (d.otra && d.otra.trim()) qs.push(d.otra.trim());
+    const lista = qs.length ? qs.map((x,i)=>`${i+1}. ${x}`).join('\n') : '1. [Escribe la información que solicitas]';
+    return `${val(d.ciudad,'[Ciudad]')}, ${hoyLargo()}
+
+Señores
+FISCALÍA GENERAL DE LA NACIÓN
+Despacho de la Fiscal General de la Nación
+Bogotá D.C.
+
+Asunto: Derecho de petición de información (artículo 23 de la Constitución Política y Ley 1755 de 2015).
+
+Yo, ${val(d.nombre,'[Nombre completo]')}, identificado(a) con cédula de ciudadanía N.º ${val(d.cedula,'[número]')}, de manera respetuosa solicito que se me entregue la siguiente información:
+
+${lista}
+
+Solicito que la respuesta se entregue dentro del término legal de diez (10) días hábiles previsto para peticiones de documentos e información (artículo 14 de la Ley 1437 de 2011, sustituido por la Ley 1755 de 2015). Si alguna información está sujeta a reserva, pido que se indique la norma que la sustenta y se entregue la parte no reservada.
+
+Recibo notificaciones en el correo electrónico: ${val(d.correo,'[Correo]')}
+
+Atentamente,
+
+
+_____________________________
+${val(d.nombre,'[Nombre completo]')}
+C.C. ${val(d.cedula,'[número]')}`;
+  }
+
+  /* Camino 4: congreso */
+  function buildCong(d){
+    return `Honorable Representante:
+
+Mi nombre es ${val(d.nombre,'[Nombre]')} y le escribo como ciudadano(a) de ${val(d.ciudad,'[Ciudad]')}.
+
+Le pido que promueva en su comisión una invitación o citación a la Fiscal General de la Nación, doctora Luz Adriana Camargo Garzón, para que rinda cuentas públicamente sobre su gestión, de acuerdo con el artículo 137 de la Constitución.
+
+${val(d.motivo,'[Explica en pocas líneas, con hechos, por qué es necesario el debate]')}
+
+Quedo atento(a) a su respuesta.
+
+${val(d.nombre,'[Nombre]')}`;
+  }
+
+  const gens = [
+    {form:'#fQueja', out:'#lQueja', build:buildQueja, id:'queja'},
+    {form:'#fPet', out:'#lPet', build:buildPet, id:'pet'},
+    {form:'#fCong', out:'#lCong', build:buildCong, id:'cong'}
+  ];
+  function render(g){
+    const f = $(g.form), d = formData(f);
+    const txt = g.build(d);
+    $(g.out).textContent = txt;
+    state.forms[g.id] = d; save(state);
+    if (g.id === 'queja'){
+      const tipo = {disciplinaria:'Queja disciplinaria',penal:'Denuncia penal',ambas:'Denuncia penal y queja disciplinaria'}[d.tipo];
+      $('#mailQueja').href = 'mailto:comision.acusaciones@camara.gov.co?subject=' +
+        encodeURIComponent(tipo + ' contra la Fiscal General de la Nación') + '&body=' + encodeURIComponent(txt);
+    }
+    if (g.id === 'cong'){
+      $('#waCong').href = 'https://wa.me/?text=' + encodeURIComponent(txt);
+    }
+  }
+  gens.forEach(g=>{
+    const f = $(g.form);
+    restore(f, g.id);
+    f.addEventListener('input', ()=>render(g));
+    f.addEventListener('change', ()=>render(g));
+    f.addEventListener('submit', e=>e.preventDefault());
+    render(g);
+  });
+
+  async function copyText(txt){
+    try{ await navigator.clipboard.writeText(txt); return true; }
+    catch(e){
+      const ta = document.createElement('textarea'); ta.value = txt; ta.style.position='fixed'; ta.style.opacity='0';
+      document.body.appendChild(ta); ta.select();
+      let ok = false; try{ ok = document.execCommand('copy'); }catch(_){}
+      ta.remove(); return ok;
+    }
+  }
+  document.querySelectorAll('[data-copy]').forEach(b=>{
+    b.addEventListener('click', async ()=>{
+      const ok = await copyText(document.getElementById(b.dataset.copy).textContent);
+      toast(ok ? 'Copiado. Pégalo donde lo vayas a enviar.' : 'No se pudo copiar. Selecciona el texto y cópialo a mano.');
+    });
+  });
+
+  /* seguimiento */
+  const pasos = [
+    {id:'leer', t:'Leí lo básico y entiendo qué se puede y qué no', rad:false},
+    {id:'pet', t:'Radiqué el derecho de petición en la Fiscalía', rad:true},
+    {id:'resp', t:'Recibí la respuesta de la Fiscalía (o se venció el plazo)', rad:false},
+    {id:'pruebas', t:'Organicé los hechos y las pruebas', rad:false},
+    {id:'abog', t:'Consulté con un abogado antes de radicar la queja', rad:false},
+    {id:'queja', t:'Radiqué la queja ante la Comisión de Acusaciones', rad:true},
+    {id:'ratif', t:'Ratifiqué la queja bajo juramento', rad:false},
+    {id:'cong', t:'Escribí a los representantes pidiendo un debate', rad:false},
+    {id:'veed', t:'Me uní o creé una veeduría ciudadana', rad:false},
+    {id:'comp', t:'Compartí esta guía con otras personas', rad:false}
+  ];
+  function drawTrack(){
+    const ul = $('#track'); ul.innerHTML = '';
+    let done = 0;
+    pasos.forEach(p=>{
+      const s = state.track[p.id] || {};
+      if (s.ok) done++;
+      const li = document.createElement('li'); if (s.ok) li.classList.add('done');
+      const cb = document.createElement('input'); cb.type='checkbox'; cb.checked=!!s.ok; cb.id='tk-'+p.id;
+      const box = document.createElement('div');
+      const lab = document.createElement('label'); lab.htmlFor = cb.id; lab.className='t'; lab.textContent = p.t; lab.style.display='block';
+      box.appendChild(lab);
+      if (s.ok && s.when){ const m = document.createElement('div'); m.className='meta'; m.textContent = 'Hecho el ' + s.when; box.appendChild(m); }
+      if (p.rad){
+        const r = document.createElement('input'); r.className='rad'; r.placeholder='Número de radicado'; r.value = s.rad || '';
+        r.setAttribute('aria-label','Número de radicado: ' + p.t);
+        r.addEventListener('input', ()=>{ state.track[p.id] = Object.assign({}, state.track[p.id], {rad:r.value}); save(state); });
+        box.appendChild(r);
+      }
+      cb.addEventListener('change', ()=>{
+        state.track[p.id] = Object.assign({}, state.track[p.id], {ok:cb.checked, when: cb.checked ? ahoraCorto() : ''});
+        save(state); drawTrack();
+      });
+      li.append(cb, box); ul.appendChild(li);
+    });
+    $('#bar').style.width = (done/pasos.length*100)+'%';
+    $('#progTxt').textContent = done + ' de ' + pasos.length + ' pasos hechos';
+  }
+  drawTrack();
+  $('#reset').addEventListener('click', ()=>{
+    if (!confirm('¿Borrar tu seguimiento y lo que escribiste en los formularios?')) return;
+    state = {forms:{}, track:{}}; save(state); location.reload();
+  });
+
+  /* compartir */
+  const link = location.href.split('#')[0];
+  const msg = '¿Te interesa saber qué puede hacer un ciudadano frente a la Fiscal General? Esta guía explica los caminos legales y te arma la queja y el derecho de petición: ' + link;
+  $('#waShare').href = 'https://wa.me/?text=' + encodeURIComponent(msg);
+  $('#copyLink').addEventListener('click', async ()=>{
+    const ok = await copyText(link);
+    toast(ok ? 'Enlace copiado.' : 'No se pudo copiar el enlace.');
+  });
+})();
+
+/* PWA: registro del service worker e instalación */
+(function(){
+  if ('serviceWorker' in navigator && location.protocol === 'https:') {
+    window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(()=>{}));
+  }
+  let deferred = null;
+  const btn = document.getElementById('installBtn');
+  window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferred = e; btn.hidden = false; });
+  btn.addEventListener('click', async () => {
+    if (!deferred) return;
+    deferred.prompt();
+    await deferred.userChoice.catch(()=>{});
+    deferred = null; btn.hidden = true;
+  });
+  window.addEventListener('appinstalled', () => { btn.hidden = true; });
+  const ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const standalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+  if (ios && !standalone) document.getElementById('iosHelp').hidden = false;
+})();
+</script>
+</body>
+</html>
