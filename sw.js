@@ -1,5 +1,5 @@
 /* Service worker de Camino ciudadano. Cambie VERSION en cada publicación. */
-const VERSION = 'camino-v1.0.0';
+const VERSION = 'camino-v1.0.1';
 const CORE = [
   './',
   './index.html',
