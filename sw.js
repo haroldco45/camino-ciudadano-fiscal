@@ -1,5 +1,5 @@
 /* Service worker de Camino ciudadano. Cambie VERSION en cada publicación. */
-const VERSION = 'camino-v1.0.1';
+const VERSION = 'camino-v1.1.0';
 const CORE = [
   './',
   './index.html',
@@ -36,6 +36,18 @@ self.addEventListener('fetch', e => {
         caches.open(VERSION).then(c => c.put('./index.html', copy));
         return res;
       }).catch(() => caches.match('./index.html'))
+    );
+    return;
+  }
+
+  // Noticias: siempre de la red; si no hay señal, la última copia.
+  if (url.origin === self.location.origin && url.pathname.endsWith('/noticias.json')) {
+    e.respondWith(
+      fetch(req).then(res => {
+        const copy = res.clone();
+        caches.open(VERSION).then(c => c.put('./noticias.json', copy));
+        return res;
+      }).catch(() => caches.match('./noticias.json'))
     );
     return;
   }

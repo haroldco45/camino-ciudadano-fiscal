@@ -29,3 +29,8 @@ Cada vez que cambie algo, suba la versión en la primera línea de `sw.js` (`cam
 - `icons/`: íconos de la app.
 
 Los datos que la persona escribe se guardan solo en su propio dispositivo; no hay servidor.
+
+## Noticias automáticas (v1.1.0)
+
+- `scripts/noticias.mjs` y `.github/workflows/noticias.yml`: un robot de GitHub Actions busca cada 30 minutos lo último sobre la Fiscal General en Google Noticias y lo guarda en `noticias.json`. La sección **Hoy** de la app lo lee cada vez que se abre.
+- Si el robot no corre solo, actívelo en la pestaña **Actions** del repositorio y pulse *Run workflow* una vez.

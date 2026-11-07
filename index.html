@@ -135,6 +135,37 @@ ol.steps li{margin-bottom:10px}
 .progress{height:10px;background:var(--line);border-radius:5px;overflow:hidden;max-width:420px}
 .progress i{display:block;height:100%;background:var(--ok);width:0;transition:width .3s}
 
+/* hoy y noticias */
+.hoy-head{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.live{display:inline-flex;align-items:center;gap:8px;font:700 14px/1 var(--body);color:var(--warn);text-transform:uppercase;letter-spacing:.06em}
+.live i{width:10px;height:10px;border-radius:50%;background:var(--warn);animation:pulse 1.6s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(138,43,30,.55)}70%{box-shadow:0 0 0 10px rgba(138,43,30,0)}100%{box-shadow:0 0 0 0 rgba(138,43,30,0)}}
+@media (prefers-reduced-motion:reduce){.live i{animation:none}}
+.search{margin:16px 0 6px;max-width:520px}
+.news{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:12px}
+.news li{background:var(--paper);border:1px solid var(--line);border-left:5px solid var(--blue);border-radius:8px;padding:14px 16px;animation:rise .35s ease both}
+.news li.today{border-left-color:var(--mark)}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.news li{animation:none}}
+.news a{color:var(--ink);font-weight:700;text-decoration:none;font-size:17px;line-height:1.35}
+.news a:hover{text-decoration:underline;text-decoration-color:var(--mark);text-decoration-thickness:3px}
+.news .meta{font-size:14px;color:var(--muted);margin-top:4px}
+.badge{display:inline-block;background:var(--mark);color:#141D3A;font:700 12px/1 var(--body);padding:4px 7px;border-radius:4px;margin-right:6px;text-transform:uppercase}
+.updated{font-size:14px;color:var(--muted)}
+.timeline{list-style:none;padding:0;margin:24px 0;border-left:3px solid var(--blue)}
+.timeline li{position:relative;padding:0 0 22px 22px;max-width:70ch}
+.timeline li::before{content:"";position:absolute;left:-9px;top:4px;width:15px;height:15px;border-radius:50%;background:var(--paper);border:3px solid var(--blue)}
+.timeline .d{font:700 18px/1 var(--display);color:var(--blue);letter-spacing:.02em}
+.timeline b{display:block;margin:4px 0 2px}
+.timeline .src{font-size:14px}
+.to{display:grid;gap:8px;margin:14px 0}
+.to div{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline;font-size:15px}
+.to b{min-width:190px}
+fieldset.ent{border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+fieldset.ent legend{font-weight:700;font-size:15px;padding:0 6px}
+fieldset.ent label{font-weight:400;display:flex;gap:8px;align-items:flex-start}
+fieldset.ent input{width:auto;margin-top:4px}
+
 footer{padding:36px 0 56px;color:var(--muted);font-size:14.5px}
 footer p{max-width:72ch}
 </style>
@@ -143,6 +174,8 @@ footer p{max-width:72ch}
 
 <nav class="nav" aria-label="Secciones">
   <div class="nav-in">
+    <a href="#hoy">Hoy</a>
+    <a href="#comision">En la Comisión</a>
     <a href="#saber">Lo básico</a>
     <a href="#queja">1. Queja</a>
     <a href="#peticion">2. Petición</a>
@@ -160,7 +193,7 @@ footer p{max-width:72ch}
     <p class="lead">A la Fiscal General de la Nación no la elige el pueblo, así que no se le puede revocar el mandato. Pero cualquier ciudadano sí puede usar estos cuatro caminos. Aquí te explicamos cada uno y te armamos los documentos.</p>
     <div class="ways">
       <a href="#queja"><div class="w-n">1</div><div class="w-t">Queja o denuncia formal</div><div class="w-d">Ante la Comisión de Acusaciones de la Cámara. El único camino que puede llevar a sacarla del cargo.</div></a>
-      <a href="#peticion"><div class="w-n">2</div><div class="w-t">Derecho de petición</div><div class="w-d">Pedirle cuentas a la Fiscalía con respuesta obligatoria.</div></a>
+      <a href="#peticion"><div class="w-n">2</div><div class="w-t">Derecho de petición</div><div class="w-d">Una sola petición a la Fiscalía, la Comisión y la Procuraduría, con respuesta obligatoria.</div></a>
       <a href="#veeduria"><div class="w-n">3</div><div class="w-t">Veeduría ciudadana</div><div class="w-d">Organizarse para vigilar la gestión de forma permanente.</div></a>
       <a href="#congreso"><div class="w-n">4</div><div class="w-t">Presión en el Congreso</div><div class="w-d">Pedir a los representantes un debate público.</div></a>
     </div>
@@ -168,6 +201,36 @@ footer p{max-width:72ch}
 </header>
 
 <main>
+<section class="block" id="hoy">
+  <div class="wrap">
+    <div class="hoy-head">
+      <span class="live"><i></i>Hoy</span>
+      <button class="btn ghost" type="button" id="refresh">Actualizar</button>
+    </div>
+    <h2 style="margin-top:12px">Lo último sobre la Fiscal General</h2>
+    <p class="updated" id="upd">Buscando noticias…</p>
+    <input class="search" id="q" type="search" placeholder="Buscar en las noticias: UNGRD, Comisión, renuncia…" aria-label="Buscar en las noticias">
+    <p id="hoyTxt" style="font-weight:600;margin:10px 0 0"></p>
+    <ul class="news" id="news"></ul>
+    <p style="margin-top:14px"><button class="btn ghost" type="button" id="more" hidden>Ver más noticias</button></p>
+  </div>
+</section>
+
+<section class="block" id="comision">
+  <div class="wrap">
+    <h2>Lo que ya está en la Comisión de Acusación</h2>
+    <p>Ya hay denuncias en curso. Una queja nueva pesa más si suma hechos o pruebas a estos procesos que si repite lo mismo.</p>
+    <ol class="timeline">
+      <li><span class="d">29 abr 2025</span><b>Denuncia de la Red de Veedurías Ciudadanas</b>La Red radicó ante la Comisión una denuncia pidiendo investigar a la Fiscal y al magistrado Vladimir Fernández.<div class="src"><a href="https://www.elespectador.com/judicial/radican-denuncia-contra-la-fiscal-luz-a-camargo-y-el-magistrado-vladimir-fernandez/" target="_blank" rel="noopener">El Espectador</a></div></li>
+      <li><span class="d">9 sep 2025</span><b>Indagación preliminar por el caso UNGRD</b>La Comisión abrió indagación preliminar por la denuncia del abogado de víctimas Pablo Bustos sobre el manejo del caso UNGRD.<div class="src"><a href="https://www.elpais.com.co/judicial/fiscal-luz-adriana-camargo-a-indagacion-preliminar-por-su-actuacion-en-el-caso-ungrd-0907.html" target="_blank" rel="noopener">El País</a></div></li>
+      <li><span class="d">13 nov 2025</span><b>La Comisión decreta pruebas</b>Le pidió a la Fiscal un informe de sus actuaciones en un plazo de 10 días.<div class="src"><a href="https://www.asuntoslegales.com.co/actualidad/hallazgo-de-pruebas-de-presunta-conveniencia-de-camargo-en-el-manejo-del-caso-ungrd-4269916" target="_blank" rel="noopener">Asuntos Legales</a></div></li>
+      <li><span class="d">Otras</span><b>Más denuncias conocidas</b>Por la suspensión de órdenes de captura a disidencias (<a href="https://www.elpais.com.co/colombia/denuncian-a-la-fiscal-luz-adriana-camargo-por-suspender-capturas-de-disidentes-de-las-farc-2910.html" target="_blank" rel="noopener">El País</a>) y por el caso de alias Papá Pitufo (<a href="https://www.lafm.com.co/judicial/presentaran-denuncia-contra-la-fiscal-general-por-pitufopolitica" target="_blank" rel="noopener">La FM</a>).</li>
+    </ol>
+    <div class="info">La Fiscal ha defendido su gestión y respondió a las críticas del presidente y de la oposición en su rendición de cuentas (<a href="https://www.asuntoslegales.com.co/actualidad/fiscal-general-se-refirio-sobre-cuestionamientos-de-petro-por-no-actuar-en-ciertos-casos-4351580" target="_blank" rel="noopener">Asuntos Legales</a>). Que haya una denuncia no quiere decir que haya culpa: eso lo decide el proceso.</div>
+    <p><a class="btn primary" href="#peticion">Pedir el estado de estos procesos</a></p>
+  </div>
+</section>
+
 <section class="block" id="saber">
   <div class="wrap">
     <h2>Lo que hay que saber antes de empezar</h2>
@@ -238,9 +301,13 @@ footer p{max-width:72ch}
 <section class="block" id="peticion">
   <div class="wrap">
     <p class="step-no">Camino 2</p>
-    <h2>Derecho de petición a la Fiscalía</h2>
-    <p>Es la forma de conseguir información oficial que luego sirve como prueba. La entidad está obligada a responder (art. 23 de la Constitución y Ley 1755 de 2015): 15 días hábiles en general, 10 días hábiles si pides documentos o información.</p>
-    <p>Se radica por el canal de PQRSD en la página oficial de la Fiscalía (fiscalia.gov.co). Guarda el número de radicado.</p>
+    <h2>Un solo derecho de petición a todas las entidades</h2>
+    <p>Pide cuentas a la vez a la Fiscalía, a la Comisión de Acusación y a la Procuraduría. Las respuestas oficiales son la mejor prueba para una queja. Están obligadas a responder (art. 23 de la Constitución y Ley 1755 de 2015): 10 días hábiles si pides información, 15 en general. Si una entidad no es la competente, debe trasladar tu petición a la que sí lo es.</p>
+    <div class="to">
+      <div><b>Fiscalía General</b>ges.documentalpqrs@fiscalia.gov.co</div>
+      <div><b>Comisión de Acusación</b>comision.acusaciones@camara.gov.co</div>
+      <div><b>Procuraduría</b><span>Solo por su formulario web PQRSDF: <a href="https://www.procuraduria.gov.co/PQRSDF/pages/default.aspx" target="_blank" rel="noopener">abrir formulario</a> y pegar la petición</span></div>
+    </div>
 
     <div class="gen">
       <form id="fPet">
@@ -252,20 +319,34 @@ footer p{max-width:72ch}
           <label>Ciudad<input name="ciudad" value="Caucasia, Antioquia"></label>
           <label>Correo para la respuesta<input name="correo" type="email"></label>
         </div>
-        <fieldset style="border:1px solid var(--line);border-radius:8px;padding:12px 14px">
-          <legend style="font-weight:600;font-size:15px;padding:0 6px">Qué información pides</legend>
-          <label style="font-weight:400;display:flex;gap:8px;align-items:flex-start"><input type="checkbox" name="q" value="Número de noticias criminales recibidas, archivadas, con imputación y con condena en los años 2024, 2025 y 2026, discriminado por departamento, con especial detalle de Antioquia." checked style="width:auto;margin-top:4px">Resultados de las investigaciones por año</label>
-          <label style="font-weight:400;display:flex;gap:8px;align-items:flex-start"><input type="checkbox" name="q" value="Ejecución presupuestal de la Fiscalía General de la Nación para las vigencias 2024, 2025 y lo corrido de 2026, y el valor total de contratos de prestación de servicios suscritos en esos periodos." checked style="width:auto;margin-top:4px">Ejecución del presupuesto y contratos</label>
-          <label style="font-weight:400;display:flex;gap:8px;align-items:flex-start"><input type="checkbox" name="q" value="La política de priorización de casos vigente y los indicadores de gestión adoptados para medir su cumplimiento, con los resultados obtenidos a la fecha." checked style="width:auto;margin-top:4px">Priorización e indicadores de gestión</label>
-          <label style="font-weight:400;display:flex;gap:8px;align-items:flex-start"><input type="checkbox" name="q" value="Número de fiscales, investigadores y casos activos por fiscal en las seccionales que cubren la subregión del Bajo Cauca antioqueño." style="width:auto;margin-top:4px">Capacidad en el Bajo Cauca</label>
+        <fieldset class="ent">
+          <legend>A la Fiscalía General de la Nación</legend>
+          <label><input type="checkbox" name="qf" value="Relación de los periodos de vacaciones, permisos y comisiones de servicio (incluidas las del exterior) de la Fiscal General de la Nación desde el 22 de marzo de 2024 hasta la fecha, con fechas de inicio y fin y el nombre de quien quedó encargado del despacho en cada caso." checked>Vacaciones, permisos y viajes de la Fiscal</label>
+          <label><input type="checkbox" name="qf" value="Estado actual, en la parte no reservada, de las investigaciones del caso de la Unidad Nacional para la Gestión del Riesgo de Desastres (UNGRD): número de personas imputadas, acusadas y condenadas, y número de investigaciones remitidas a otras autoridades por fuero." checked>Avance del caso UNGRD</label>
+          <label><input type="checkbox" name="qf" value="Número de noticias criminales recibidas, archivadas, con imputación y con condena en los años 2024, 2025 y 2026, discriminado por departamento, con especial detalle de Antioquia." checked>Resultados de las investigaciones por año</label>
+          <label><input type="checkbox" name="qf" value="Ejecución presupuestal de la Fiscalía General de la Nación para las vigencias 2024, 2025 y lo corrido de 2026, y el valor total de contratos de prestación de servicios suscritos en esos periodos.">Presupuesto y contratos</label>
+          <label><input type="checkbox" name="qf" value="Número de fiscales, investigadores y casos activos por fiscal en las seccionales que cubren la subregión del Bajo Cauca antioqueño.">Capacidad en el Bajo Cauca</label>
         </fieldset>
-        <label>Otra pregunta <small>Opcional</small><textarea name="otra" style="min-height:80px"></textarea></label>
+        <fieldset class="ent">
+          <legend>A la Comisión de Investigación y Acusación</legend>
+          <label><input type="checkbox" name="qc" value="Relación de las denuncias y quejas radicadas contra la Fiscal General de la Nación, doctora Luz Adriana Camargo Garzón, desde marzo de 2024 hasta la fecha, indicando para cada una: número de radicado, fecha, etapa actual (indagación preliminar, investigación, archivo u otra) y representante investigador asignado." checked>Cuántas denuncias hay y en qué etapa van</label>
+          <label><input type="checkbox" name="qc" value="Estado actual de la indagación preliminar abierta en septiembre de 2025 por la denuncia del abogado Pablo Bustos relacionada con el caso UNGRD, incluyendo si la Fiscal General entregó el informe solicitado por la Comisión y qué pruebas se han practicado." checked>Estado del proceso por el caso UNGRD</label>
+          <label><input type="checkbox" name="qc" value="Términos legales que tiene la Comisión para decidir cada etapa de estos procesos y fecha estimada de la próxima decisión." checked>Plazos y próxima decisión</label>
+        </fieldset>
+        <fieldset class="ent">
+          <legend>A la Procuraduría General de la Nación</legend>
+          <label><input type="checkbox" name="qp" value="Si la Procuraduría interviene como Ministerio Público en los procesos que adelanta la Comisión de Investigación y Acusación contra la Fiscal General de la Nación, y qué conceptos o solicitudes ha presentado en ellos." checked>Su papel en los procesos contra la Fiscal</label>
+        </fieldset>
+        <label>Otra pregunta <small>Opcional, para todas las entidades</small><textarea name="otra" style="min-height:80px"></textarea></label>
       </form>
       <div>
         <div class="letter" id="lPet" aria-live="polite"></div>
         <div class="actions">
-          <button class="btn primary" type="button" data-copy="lPet">Copiar petición</button>
+          <a class="btn primary" id="mailPet" target="_blank" rel="noopener">Enviar a todas de una vez</a>
+          <button class="btn ghost" type="button" data-copy="lPet">Copiar petición</button>
+          <a class="btn ghost" href="https://www.procuraduria.gov.co/PQRSDF/pages/default.aspx" target="_blank" rel="noopener">Formulario Procuraduría</a>
         </div>
+        <p style="font-size:14.5px;color:var(--muted)">"Enviar a todas" abre tu correo con la Fiscalía y la Comisión como destinatarios y la petición ya escrita. Para la Procuraduría, copia y pega en su formulario. Guarda los números de radicado que te devuelvan.</p>
       </div>
     </div>
   </div>
@@ -436,24 +517,31 @@ C.C. ${val(d.cedula,'[número]')}`;
   }
 
   /* Camino 2: petición */
+  const ENT = [
+    {k:'qf', n:'A LA FISCALÍA GENERAL DE LA NACIÓN', dest:'FISCALÍA GENERAL DE LA NACIÓN\nDespacho de la Fiscal General de la Nación'},
+    {k:'qc', n:'A LA COMISIÓN DE INVESTIGACIÓN Y ACUSACIÓN', dest:'COMISIÓN DE INVESTIGACIÓN Y ACUSACIÓN\nCámara de Representantes'},
+    {k:'qp', n:'A LA PROCURADURÍA GENERAL DE LA NACIÓN', dest:'PROCURADURÍA GENERAL DE LA NACIÓN'}
+  ];
   function buildPet(d){
-    const qs = (d.q||[]).slice();
-    if (d.otra && d.otra.trim()) qs.push(d.otra.trim());
-    const lista = qs.length ? qs.map((x,i)=>`${i+1}. ${x}`).join('\n') : '1. [Escribe la información que solicitas]';
+    let n = 0;
+    const usadas = ENT.filter(e => (d[e.k]||[]).length);
+    const bloques = usadas.map(e => e.n + '\n' + d[e.k].map(x => `${++n}. ${x}`).join('\n'));
+    if (d.otra && d.otra.trim()) bloques.push('A TODAS LAS ENTIDADES\n' + `${++n}. ${d.otra.trim()}`);
+    const lista = bloques.length ? bloques.join('\n\n') : '1. [Marca o escribe la información que solicitas]';
+    const dests = (usadas.length ? usadas : ENT).map(e => e.dest).join('\n\n');
     return `${val(d.ciudad,'[Ciudad]')}, ${hoyLargo()}
 
 Señores
-FISCALÍA GENERAL DE LA NACIÓN
-Despacho de la Fiscal General de la Nación
+${dests}
 Bogotá D.C.
 
-Asunto: Derecho de petición de información (artículo 23 de la Constitución Política y Ley 1755 de 2015).
+Asunto: Derecho de petición de información (artículo 23 de la Constitución Política y Ley 1755 de 2015) sobre la gestión de la Fiscal General de la Nación y los procesos en su contra.
 
-Yo, ${val(d.nombre,'[Nombre completo]')}, identificado(a) con cédula de ciudadanía N.º ${val(d.cedula,'[número]')}, de manera respetuosa solicito que se me entregue la siguiente información:
+Yo, ${val(d.nombre,'[Nombre completo]')}, identificado(a) con cédula de ciudadanía N.º ${val(d.cedula,'[número]')}, de manera respetuosa dirijo esta petición a cada una de las entidades señaladas, para que cada una responda lo que es de su competencia:
 
 ${lista}
 
-Solicito que la respuesta se entregue dentro del término legal de diez (10) días hábiles previsto para peticiones de documentos e información (artículo 14 de la Ley 1437 de 2011, sustituido por la Ley 1755 de 2015). Si alguna información está sujeta a reserva, pido que se indique la norma que la sustenta y se entregue la parte no reservada.
+Solicito que la respuesta se entregue dentro del término legal de diez (10) días hábiles previsto para peticiones de documentos e información (artículo 14 de la Ley 1437 de 2011, sustituido por la Ley 1755 de 2015). Si alguna entidad no es competente para responder un punto, le pido trasladarlo a la autoridad que sí lo sea e informarme (artículo 21 de la misma ley). Si alguna información está sujeta a reserva, pido que se indique la norma que la sustenta y se entregue la parte no reservada.
 
 Recibo notificaciones en el correo electrónico: ${val(d.correo,'[Correo]')}
 
@@ -495,6 +583,10 @@ ${val(d.nombre,'[Nombre]')}`;
       $('#mailQueja').href = 'mailto:comision.acusaciones@camara.gov.co?subject=' +
         encodeURIComponent(tipo + ' contra la Fiscal General de la Nación') + '&body=' + encodeURIComponent(txt);
     }
+    if (g.id === 'pet'){
+      $('#mailPet').href = 'mailto:ges.documentalpqrs@fiscalia.gov.co,comision.acusaciones@camara.gov.co?subject=' +
+        encodeURIComponent('Derecho de petición de información - Fiscal General de la Nación') + '&body=' + encodeURIComponent(txt);
+    }
     if (g.id === 'cong'){
       $('#waCong').href = 'https://wa.me/?text=' + encodeURIComponent(txt);
     }
@@ -527,8 +619,10 @@ ${val(d.nombre,'[Nombre]')}`;
   /* seguimiento */
   const pasos = [
     {id:'leer', t:'Leí lo básico y entiendo qué se puede y qué no', rad:false},
-    {id:'pet', t:'Radiqué el derecho de petición en la Fiscalía', rad:true},
-    {id:'resp', t:'Recibí la respuesta de la Fiscalía (o se venció el plazo)', rad:false},
+    {id:'pet', t:'Envié el derecho de petición a la Fiscalía', rad:true},
+    {id:'petc', t:'Envié el derecho de petición a la Comisión de Acusación', rad:true},
+    {id:'petp', t:'Radiqué la petición en el formulario de la Procuraduría', rad:true},
+    {id:'resp', t:'Recibí las respuestas (o se venció el plazo)', rad:false},
     {id:'pruebas', t:'Organicé los hechos y las pruebas', rad:false},
     {id:'abog', t:'Consulté con un abogado antes de radicar la queja', rad:false},
     {id:'queja', t:'Radiqué la queja ante la Comisión de Acusaciones', rad:true},
@@ -569,6 +663,51 @@ ${val(d.nombre,'[Nombre]')}`;
     if (!confirm('¿Borrar tu seguimiento y lo que escribiste en los formularios?')) return;
     state = {forms:{}, track:{}}; save(state); location.reload();
   });
+
+  /* Hoy: noticias que trae el robot cada 30 minutos */
+  const diaCO = d => new Intl.DateTimeFormat('en-CA',{timeZone:TZ,year:'numeric',month:'2-digit',day:'2-digit'}).format(d);
+  const fechaCO = d => new Intl.DateTimeFormat('es-CO',{timeZone:TZ,day:'numeric',month:'short',year:'numeric',hour:'numeric',minute:'2-digit'}).format(d);
+  let noticias = [], mostrar = 12;
+  function pintar(){
+    const q = $('#q').value.trim().toLowerCase();
+    const hoy = diaCO(new Date());
+    const lista = noticias.filter(n => !q || (n.titulo + ' ' + n.fuente).toLowerCase().includes(q));
+    const deHoy = noticias.filter(n => diaCO(new Date(n.fecha)) === hoy).length;
+    $('#hoyTxt').textContent = q
+      ? lista.length + (lista.length === 1 ? ' noticia' : ' noticias') + ' con "' + $('#q').value.trim() + '"'
+      : (deHoy ? deHoy + (deHoy === 1 ? ' noticia de hoy' : ' noticias de hoy') : 'Hoy no hay noticias nuevas todavía. Estas son las más recientes.');
+    const ul = $('#news'); ul.innerHTML = '';
+    lista.slice(0, mostrar).forEach(n => {
+      const li = document.createElement('li');
+      const f = new Date(n.fecha);
+      if (diaCO(f) === hoy) li.classList.add('today');
+      const a = document.createElement('a'); a.href = n.url; a.target = '_blank'; a.rel = 'noopener'; a.textContent = n.titulo;
+      const m = document.createElement('div'); m.className = 'meta';
+      if (diaCO(f) === hoy){ const b = document.createElement('span'); b.className = 'badge'; b.textContent = 'Hoy'; m.appendChild(b); }
+      m.appendChild(document.createTextNode((n.fuente ? n.fuente + ' · ' : '') + fechaCO(f)));
+      li.append(a, m); ul.appendChild(li);
+    });
+    if (!lista.length) ul.innerHTML = '<li>No hay noticias con esa búsqueda.</li>';
+    $('#more').hidden = lista.length <= mostrar;
+  }
+  async function cargarNoticias(manual){
+    $('#upd').textContent = 'Buscando noticias…';
+    try{
+      const r = await fetch('noticias.json?t=' + Date.now(), {cache:'no-store'});
+      const data = await r.json();
+      noticias = (data.noticias || []).sort((a,b) => b.fecha.localeCompare(a.fecha));
+      $('#upd').textContent = 'Actualizado por el robot: ' + fechaCO(new Date(data.actualizado)) + ' (hora de Colombia). Se revisa cada 30 minutos.';
+      if (manual) toast('Noticias al día.');
+    }catch(e){
+      $('#upd').textContent = 'Sin conexión: no se pudieron traer las noticias.';
+    }
+    pintar();
+  }
+  $('#q').addEventListener('input', ()=>{ mostrar = 12; pintar(); });
+  $('#more').addEventListener('click', ()=>{ mostrar += 12; pintar(); });
+  $('#refresh').addEventListener('click', ()=>cargarNoticias(true));
+  document.addEventListener('visibilitychange', ()=>{ if (document.visibilityState === 'visible') cargarNoticias(false); });
+  cargarNoticias(false);
 
   /* compartir */
   const link = location.href.split('#')[0];
