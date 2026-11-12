@@ -1,11 +1,17 @@
 {
- "actualizado": "2026-11-12T16:59:30.784Z",
+ "actualizado": "2026-11-12T22:36:32.457Z",
  "noticias": [
   {
    "titulo": "Luz Adriana Camargo, una Fiscalía sin respuestas",
    "fuente": "Revista Semana",
    "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxOZ1VjOFUwek11LXVSXzlCS2NfSFItRWlxVjN0ZTYtcm56WUNmSXdpX01EbkQ3ZzZxNGQzTVRqYjZtbnhBdHg5QzlPbjR0SUd6dy1sNl9xUGZSbVJmZDlqLUQ3Nk1JZEZFUzNsSDB5S0VuV0RtalpEbUtxQ3plR1RRR01kSGNnbGFraEFyZjdHVUJMWmllUEVqcFpuc9IBoAFBVV95cUxQbm9IZkZ5cFFma09NMlVoYVZmRDFtLTJIRElaSy1fWTZzOVgxRlZyUWk0TjAtRUowbm83ZWJmWXhIaUVqRnhvVWdNLU9mN2RZUTdHSlpIbmhGa0U0NU9DeTF0cHB1bWtyOUVZcWFhVXl1eGlNb0FZd213ZnBSckJONF96cEtDb19scjVRcGt2NFdtM0lJTlZvWTFCOC0wdzZJ?oc=5",
    "fecha": "2026-11-12T14:53:52.000Z"
+  },
+  {
+   "titulo": "Fiscal Luz Adriana Camargo niega haberse reunido con Carlos Andrés Oyola, acusado de ser el hacker del gobierno Petro",
+   "fuente": "El País",
+   "url": "https://news.google.com/rss/articles/CBMiggJBVV95cUxQV004b28tWW91X1E4aHM2WXpLanRtSUhoYzk4R1FLNUpsa3dlQnRMRjZxdzlVb2htYWJRT1V5NGZEREtRSG13dmpSaENScXMyZHJKc0JIQTROVHpTdlN5N2R4NGxzXzJYdWFXWkIyZ1N1RnZvWW1ydEZBc0JTVzJ5UEFQSDFCS3JfMTZBSGtJWldDUnRtMU4wU1doaFBmVVVCSmN6M19tdThoRVlFaGFfVzduRVlLdTE2Z0pfaVVfSFdtbC1rQ21rdTJkT3NfMFljTktvcHlBWVRJREdsdmtHckhMZDJfQ2pBT1ZhUGFkbFRHbmtSUjlGNGRlN29BVzBONmfSAYcCQVVfeXFMTU5uV2FRaEd6al8wb0d3UHI2c1RndHFxQ0FjT01tYzB6Z2hIdEVKbFR5VDltcmpyV21qM2VlQzJnM2M2SUNlMjdUVEtMY0lPYmRiUm5LOWwxZHRKVWc4OHFsTTh1WEphNmFWUlVxQ0NkRWpHeC1COHFlZTNZX2VwV3ZoSGJGRUpURV9nY3dvMXpsSXpUbkxUUmxZZG9mMHVmZTRUVW1vd0RCWnRMRjQwVFluZ3hBODFPaDF0Tnh4NUgtaGhxSEdxNXdGSjVEb3F4MEpMWnlPM3poNnpRUW1ub3FJTXZPTkFmYk5sM0VISjRaRm90QTZKaWV0cnhVbC1OZDQtb05sUWc?oc=5",
+   "fecha": "2026-11-10T03:07:00.000Z"
   },
   {
    "titulo": "Fiscal Camargo responde a escándalo del DNI y desmiente reuniones con Carlos Oyola",
@@ -18,12 +24,6 @@
    "fuente": "La Opinión Cúcuta",
    "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNOFlFU3ZTTzlWREZKWU5hdjlFbGQ1Ulgydm83aGZuNGdmX1VrT0V5VHBFcWVGeEF6YVBVUlRiNkl1UERNeERJbFFhaHl4VVQ1Tm1TTGhHelVuOXg5ZWdpZ1Nydk5DZWN0N1pFWkUyQmN2LTlTRXNSZ1NLYVZoSjM2RVRrMDN2T1kteW1qT0pxOUh1SGFUQzJjOVhJLUpJV0tDTnRLUmdhSldzcHNmd3BPeQ?oc=5",
    "fecha": "2026-11-09T21:06:35.000Z"
-  },
-  {
-   "titulo": "Fiscal Luz Adriana Camargo niega haberse reunido con Carlos Andrés Oyola, acusado de ser el hacker del gobierno Petro",
-   "fuente": "El País",
-   "url": "https://news.google.com/rss/articles/CBMiggJBVV95cUxQV004b28tWW91X1E4aHM2WXpLanRtSUhoYzk4R1FLNUpsa3dlQnRMRjZxdzlVb2htYWJRT1V5NGZEREtRSG13dmpSaENScXMyZHJKc0JIQTROVHpTdlN5N2R4NGxzXzJYdWFXWkIyZ1N1RnZvWW1ydEZBc0JTVzJ5UEFQSDFCS3JfMTZBSGtJWldDUnRtMU4wU1doaFBmVVVCSmN6M19tdThoRVlFaGFfVzduRVlLdTE2Z0pfaVVfSFdtbC1rQ21rdTJkT3NfMFljTktvcHlBWVRJREdsdmtHckhMZDJfQ2pBT1ZhUGFkbFRHbmtSUjlGNGRlN29BVzBONmfSAYcCQVVfeXFMTU5uV2FRaEd6al8wb0d3UHI2c1RndHFxQ0FjT01tYzB6Z2hIdEVKbFR5VDltcmpyV21qM2VlQzJnM2M2SUNlMjdUVEtMY0lPYmRiUm5LOWwxZHRKVWc4OHFsTTh1WEphNmFWUlVxQ0NkRWpHeC1COHFlZTNZX2VwV3ZoSGJGRUpURV9nY3dvMXpsSXpUbkxUUmxZZG9mMHVmZTRUVW1vd0RCWnRMRjQwVFluZ3hBODFPaDF0Tnh4NUgtaGhxSEdxNXdGSjVEb3F4MEpMWnlPM3poNnpRUW1ub3FJTXZPTkFmYk5sM0VISjRaRm90QTZKaWV0cnhVbC1OZDQtb05sUWc?oc=5",
-   "fecha": "2026-11-09T19:07:00.000Z"
   },
   {
    "titulo": "Fiscal general reacciona a informe sobre hacker de la DNI, quien no aceptó cargos",
